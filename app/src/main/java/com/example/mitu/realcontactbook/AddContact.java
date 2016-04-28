@@ -45,7 +45,7 @@ public class AddContact extends AppCompatActivity {
 
         myRealm = Realm.getInstance(realmConfig);
 
-        myRealm.beginTransaction();
+        //myRealm.beginTransaction();
         contactModel = new ContactModel();
 
         ///Query
@@ -63,7 +63,7 @@ public class AddContact extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String phone = etPhone.getText().toString();
 
-
+                myRealm.beginTransaction();
                 contactModel.setmName(name);
                 contactModel.setmPhone(phone);
                 myRealm.copyToRealm(contactModel);
