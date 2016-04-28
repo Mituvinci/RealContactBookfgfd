@@ -89,29 +89,7 @@ public class AddContact extends AppCompatActivity {
         linearLayout.setVisibility(v.VISIBLE);
 
     }
-  /*  public void addContact(View v){
-        String name = etName.getText().toString();
-        String phone = etPhone.getText().toString();
 
-
-        contactModel.setmName(name);
-        contactModel.setmPhone(phone);
-        myRealm.copyToRealm(contactModel);
-        myRealm.commitTransaction();
-
-
-        linearLayout.setVisibility(v.GONE);
-        addbutton.setVisibility(v.VISIBLE);
-        results1 = myRealm.where(ContactModel.class).findAll();
-        contactAdapter = new ContactAdapter();
-
-        lvContactList.setAdapter(contactAdapter);
-
-       // myRealm.close();
-
-
-
-    }*/
 
 
 
