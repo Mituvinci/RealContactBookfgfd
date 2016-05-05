@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class AddContact extends AppCompatActivity {
     EditText etName, etPhone;
@@ -22,13 +21,15 @@ public class AddContact extends AppCompatActivity {
     Button addbutton,button;
     private   Realm myRealm;
     ListView lvContactList;
-    public  RealmResults<ContactModel> results1;
+    //public  RealmResults<ContactModel> results1;
+    protected io.realm.RealmResults<ContactModel> results1;
     LinearLayout linearLayout;
     private ContactAdapter contactAdapter;
 
 
     public int _id=0;
     long position_forUpdate= -1 ;
+    int delete =0 ;
     TextView tv;
     Button del;
    // final ContactModel d;
@@ -68,7 +69,7 @@ public class AddContact extends AppCompatActivity {
                 _id = -1;
                 position_forUpdate = id+1;
 
-              //  d = results1.get(position);
+
                 String name = results1.get(position).getmName();
                 String phone = results1.get(position).getmPhone();
                 addbutton.setVisibility(view.GONE);
@@ -76,7 +77,6 @@ public class AddContact extends AppCompatActivity {
                 etName.setText(name+"");
                 etPhone.setText(phone+"");
 
-               // addContact(view);
                 Log.d("Position ",position+"");
                 Log.d("id ",id+"");
                 return true;
@@ -91,6 +91,7 @@ public class AddContact extends AppCompatActivity {
 
         long id1;
 
+
         if (_id > -1) {
             id1 = results1.size() == 0 ? 1 : results1.size() + 1;
             String name = etName.getText().toString();
@@ -99,7 +100,8 @@ public class AddContact extends AppCompatActivity {
             contactModel.setmName(name);
             contactModel.setmPhone(phone);
             contactModel.setmId( id1 );
-            myRealm.copyToRealm(contactModel);
+             myRealm.copyToRealm(contactModel);
+
 
         }else if (_id == -1){
 
@@ -113,7 +115,6 @@ public class AddContact extends AppCompatActivity {
            // Log.d("Update","_id "+_id+"Previous "+getname+" ,"+getPhone+","+id2+" Now :"+contactModel.getmName()+","+contactModel.getmPhone()+","+contactModel.getmId());
             _id = 0;
         }
-       // myRealm.copyToRealmOrUpdate(contactModel);
         myRealm.commitTransaction();
 
 
@@ -133,9 +134,25 @@ public class AddContact extends AppCompatActivity {
     }
 
     public void delete(View view){
-      /*  d.removeFromRealm();
-        realm.commitTransaction();
-        realm.close();*/
+
+        final  ContactModel  d = results1.get((int) position_forUpdate-1);
+        delete = 1;
+        Log.d("ID jsdkfjsdk",d.getmId()+"");
+
+        myRealm.beginTransaction();
+        d.removeFromRealm();
+        myRealm.commitTransaction();
+        results1 = myRealm.where(ContactModel.class).findAll();
+        contactAdapter = new ContactAdapter();
+
+        lvContactList.setAdapter(contactAdapter);
+       // myRealm.close();
+
+        linearLayout.setVisibility(view.GONE);
+        addbutton.setVisibility(view.VISIBLE);
+
+
+        position_forUpdate = -1;
 
     }
 
@@ -146,7 +163,13 @@ public class AddContact extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return results1.size();
+            if (delete == 1){
+                delete = 0;
+                return results1.size()-1;
+
+            }else {
+                return results1.size();
+            }
         }
 
         @Override
