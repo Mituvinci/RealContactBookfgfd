@@ -31,6 +31,7 @@ public class AddContact extends AppCompatActivity {
     long position_forUpdate= -1 ;
     TextView tv;
     Button del;
+   // final ContactModel d;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,8 @@ public class AddContact extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 _id = -1;
                 position_forUpdate = id+1;
+
+              //  d = results1.get(position);
                 String name = results1.get(position).getmName();
                 String phone = results1.get(position).getmPhone();
                 addbutton.setVisibility(view.GONE);
@@ -126,6 +129,13 @@ public class AddContact extends AppCompatActivity {
     public void newcontact(View v){
         addbutton.setVisibility(v.GONE);
         linearLayout.setVisibility(v.VISIBLE);
+
+    }
+
+    public void delete(View view){
+      /*  d.removeFromRealm();
+        realm.commitTransaction();
+        realm.close();*/
 
     }
 

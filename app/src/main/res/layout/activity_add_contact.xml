@@ -56,6 +56,12 @@
                 android:layout_height="wrap_content"
                 android:text="Cancel"
                 android:onClick="back" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete"
+                android:text="Delete"
+                android:onClick="delete"/>
         </LinearLayout>
 
     </LinearLayout>
